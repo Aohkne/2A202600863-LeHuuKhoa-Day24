@@ -5,6 +5,6 @@ __pycache__/
 *.egg-info/
 .venv/
 venv/
-answers_50q.json
-reports/*.json
-!reports/.gitkeep
+
+# answers_50q.json và reports/*.json là deliverables của lab (xem ASSIGNMENT.md)
+# nên được commit, không ignore.

@@ -11,6 +11,16 @@ OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "")   # custom endpoint (NVIDIA N
 LLM_MODEL       = os.getenv("LLM_MODEL", "")         # overrides JUDGE_MODEL if set
 HF_TOKEN = os.getenv("HF_TOKEN", "")  # Optional: for HuggingFace models
 
+# --- Day 18 compatibility aliases (m4_eval / m5_enrichment / pipeline import these) ---
+LLM_API_KEY  = OPENAI_API_KEY
+LLM_BASE_URL = OPENAI_BASE_URL or "https://api.openai.com/v1"
+
+
+def get_llm_client():
+    """OpenAI-compatible client dùng chung cho các module Day 18."""
+    from openai import OpenAI
+    return OpenAI(base_url=LLM_BASE_URL, api_key=LLM_API_KEY)
+
 # --- Qdrant (same as Day 18) ---
 QDRANT_HOST = "localhost"
 QDRANT_PORT = 6333

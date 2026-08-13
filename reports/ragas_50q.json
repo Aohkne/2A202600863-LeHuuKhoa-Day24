@@ -1,0 +1,805 @@
+{
+  "total_questions": 50,
+  "overall": {
+    "faithfulness": 0.7273333333333334,
+    "context_recall": 0.7983333333333333,
+    "context_precision": 0.9649999999467499,
+    "answer_relevancy": 0.7012396845389363
+  },
+  "per_distribution": {
+    "factual": {
+      "count": 20,
+      "faithfulness": 0.9333333333333333,
+      "answer_relevancy": 0.7794761921069003,
+      "context_precision": 0.95833333327125,
+      "context_recall": 0.8,
+      "avg_score": 0.8677857146778709
+    },
+    "multi_hop": {
+      "count": 20,
+      "faithfulness": 0.45999999999999996,
+      "answer_relevancy": 0.6697498116763319,
+      "context_precision": 0.970833333293125,
+      "context_recall": 0.8708333333333333,
+      "avg_score": 0.7428541195756975
+    },
+    "adversarial": {
+      "count": 10,
+      "faithfulness": 0.85,
+      "answer_relevancy": 0.6077464151282168,
+      "context_precision": 0.966666666605,
+      "context_recall": 0.65,
+      "avg_score": 0.7686032704333041
+    }
+  },
+  "failure_clusters": {
+    "threshold": 0.6,
+    "matrix": {
+      "faithfulness": {
+        "factual": 2,
+        "multi_hop": 14,
+        "adversarial": 2
+      },
+      "context_recall": {
+        "factual": 6,
+        "multi_hop": 1,
+        "adversarial": 6
+      },
+      "context_precision": {
+        "factual": 0,
+        "multi_hop": 1,
+        "adversarial": 0
+      },
+      "answer_relevancy": {
+        "factual": 12,
+        "multi_hop": 4,
+        "adversarial": 2
+      }
+    },
+    "failure_matrix": {
+      "faithfulness": {
+        "factual": 1,
+        "multi_hop": 12,
+        "adversarial": 2
+      },
+      "context_recall": {
+        "factual": 6,
+        "multi_hop": 1,
+        "adversarial": 1
+      },
+      "context_precision": {
+        "factual": 0,
+        "multi_hop": 1,
+        "adversarial": 0
+      },
+      "answer_relevancy": {
+        "factual": 0,
+        "multi_hop": 0,
+        "adversarial": 2
+      }
+    },
+    "failure_rate_by_distribution": {
+      "factual": 0.35,
+      "multi_hop": 0.7,
+      "adversarial": 0.5
+    },
+    "avg_score_by_distribution": {
+      "factual": 0.8678,
+      "multi_hop": 0.7429,
+      "adversarial": 0.7686
+    },
+    "dominant_failure_distribution": "multi_hop",
+    "dominant_failure_metric": "faithfulness",
+    "worst_cluster": {
+      "metric": "faithfulness",
+      "distribution": "multi_hop",
+      "count": 12
+    },
+    "insight": "Distribution 'multi_hop' có failure rate cao nhất (70%, avg_score 0.743). Metric 'faithfulness' là điểm yếu chủ đạo — cluster nặng nhất là (faithfulness × multi_hop) với 12 câu dưới ngưỡng 0.6. Chẩn đoán: LLM hallucinating. Gợi ý: Tighten system prompt, lower temperature"
+  },
+  "adversarial_harder_than_factual": true,
+  "bottom_10": [
+    {
+      "rank": 1,
+      "question_id": 33,
+      "distribution": "multi_hop",
+      "question": "Nhân viên Manager có thâm niên 12 năm: tổng phụ cấp hàng tháng và số ngày phép năm theo v2024 là bao nhiêu?",
+      "avg_score": 0.375,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    },
+    {
+      "rank": 2,
+      "question_id": 50,
+      "distribution": "adversarial",
+      "question": "Nhân viên Manager có thể dùng VPN cá nhân (như NordVPN) khi WFH để tăng bảo mật thêm không?",
+      "avg_score": 0.4167,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    },
+    {
+      "rank": 3,
+      "question_id": 5,
+      "distribution": "factual",
+      "question": "Muốn mua thiết bị trị giá 55 triệu cần ai phê duyệt?",
+      "avg_score": 0.4826,
+      "worst_metric": "context_recall",
+      "diagnosis": "Missing relevant chunks",
+      "suggested_fix": "Improve chunking or add BM25"
+    },
+    {
+      "rank": 4,
+      "question_id": 9,
+      "distribution": "factual",
+      "question": "Nam nhân viên được nghỉ bao nhiêu ngày khi vợ sinh con?",
+      "avg_score": 0.5,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    },
+    {
+      "rank": 5,
+      "question_id": 39,
+      "distribution": "multi_hop",
+      "question": "So sánh yêu cầu mật khẩu giữa policy v1.0 và v2.0 về độ dài tối thiểu, thời hạn đổi và MFA.",
+      "avg_score": 0.5,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    },
+    {
+      "rank": 6,
+      "question_id": 29,
+      "distribution": "multi_hop",
+      "question": "Nhân viên tạm ứng 8 triệu, chưa thanh toán sau 30 ngày (quá hạn 15 ngày). Ai phê duyệt khoản này và phí phạt là bao nhiêu?",
+      "avg_score": 0.5,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    },
+    {
+      "rank": 7,
+      "question_id": 31,
+      "distribution": "multi_hop",
+      "question": "Nhân viên đi công tác trong nước 2 ngày, ở khách sạn giá 1.500.000 VNĐ/đêm. Công ty thanh toán tối đa bao nhiêu cho tiền khách sạn?",
+      "avg_score": 0.615,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    },
+    {
+      "rank": 8,
+      "question_id": 48,
+      "distribution": "adversarial",
+      "question": "Nhân viên thử việc có được hưởng bảo hiểm sức khỏe PVI không?",
+      "avg_score": 0.6667,
+      "worst_metric": "answer_relevancy",
+      "diagnosis": "Answer doesn't match question",
+      "suggested_fix": "Improve prompt template"
+    },
+    {
+      "rank": 9,
+      "question_id": 47,
+      "distribution": "adversarial",
+      "question": "Khi phát hiện malware trên máy tính công ty, nhân viên có nên tự xử lý không?",
+      "avg_score": 0.6667,
+      "worst_metric": "answer_relevancy",
+      "diagnosis": "Answer doesn't match question",
+      "suggested_fix": "Improve prompt template"
+    },
+    {
+      "rank": 10,
+      "question_id": 34,
+      "distribution": "multi_hop",
+      "question": "Nhân viên tạm ứng 4 triệu và một nhân viên khác tạm ứng 7 triệu: quy trình phê duyệt khác nhau thế nào?",
+      "avg_score": 0.6698,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    }
+  ],
+  "per_question": [
+    {
+      "question_id": 1,
+      "distribution": "factual",
+      "question": "Nhân viên được nghỉ bao nhiêu ngày khi kết hôn?",
+      "answer": "Nhân viên được nghỉ 3 ngày làm việc khi kết hôn.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9023,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9756,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 2,
+      "distribution": "factual",
+      "question": "Bảo hiểm sức khỏe PVI có hạn mức bao nhiêu cho nhân viên?",
+      "answer": "Hạn mức bảo hiểm sức khỏe PVI cho nhân viên là 200.000 VNĐ/năm.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9489,
+      "context_precision": 1.0,
+      "context_recall": 0.0,
+      "avg_score": 0.7372,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 3,
+      "distribution": "factual",
+      "question": "Phụ cấp ăn trưa hàng tháng là bao nhiêu?",
+      "answer": "Phụ cấp ăn trưa hàng tháng là **1.000.000 VNĐ/tháng**.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.7667,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9417,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 4,
+      "distribution": "factual",
+      "question": "Mentor và buddy của nhân viên mới có thể là cùng một người không? Quản lý trực tiếp có thể làm mentor không?",
+      "answer": "Mentor và Buddy của nhân viên mới **không** thể là cùng một người. Quản lý trực tiếp **không** được làm Mentor hoặc Buddy.",
+      "faithfulness": 0.6667,
+      "answer_relevancy": 0.8161,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.8707,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 5,
+      "distribution": "factual",
+      "question": "Muốn mua thiết bị trị giá 55 triệu cần ai phê duyệt?",
+      "answer": "Cần thêm phê duyệt của Kế toán trưởng.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.5973,
+      "context_precision": 0.3333,
+      "context_recall": 0.0,
+      "avg_score": 0.4826,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 6,
+      "distribution": "factual",
+      "question": "Thông tin lương thuộc cấp độ phân loại dữ liệu nào?",
+      "answer": "Thông tin lương thuộc cấp độ phân loại dữ liệu \"Bí mật\".",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.8898,
+      "context_precision": 0.8333,
+      "context_recall": 0.5,
+      "avg_score": 0.8058,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 7,
+      "distribution": "factual",
+      "question": "Nghỉ phép không lương 20 ngày cần ai phê duyệt?",
+      "answer": "Cần phê duyệt của Giám đốc điều hành (CEO).",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.804,
+      "context_precision": 1.0,
+      "context_recall": 0.5,
+      "avg_score": 0.826,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 8,
+      "distribution": "factual",
+      "question": "Nhân viên được nghỉ bao nhiêu ngày khi cha hoặc mẹ mất?",
+      "answer": "Nhân viên được nghỉ 3 ngày làm việc khi cha hoặc mẹ mất.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9343,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9836,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 9,
+      "distribution": "factual",
+      "question": "Nam nhân viên được nghỉ bao nhiêu ngày khi vợ sinh con?",
+      "answer": "Không tìm thấy.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.5,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 10,
+      "distribution": "factual",
+      "question": "Nhân viên chính thức được phép làm việc từ xa tối đa bao nhiêu ngày một tuần?",
+      "answer": "Nhân viên chính thức được phép làm việc từ xa tối đa **2 ngày/tuần**.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9935,
+      "context_precision": 1.0,
+      "context_recall": 0.5,
+      "avg_score": 0.8734,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 11,
+      "distribution": "factual",
+      "question": "VPN có bắt buộc không khi làm việc từ xa (WFH)?",
+      "answer": "Có, VPN là bắt buộc khi làm việc từ xa.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.8642,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.966,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 12,
+      "distribution": "factual",
+      "question": "Thưởng Tết tối thiểu cho nhân viên chính thức có từ 6 tháng trở lên là bao nhiêu?",
+      "answer": "Thưởng Tết tối thiểu cho nhân viên chính thức có từ 6 tháng trở lên là 1 tháng lương.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.7409,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9352,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 13,
+      "distribution": "factual",
+      "question": "Đánh giá hiệu suất diễn ra mấy lần một năm và vào tháng nào?",
+      "answer": "Đánh giá hiệu suất diễn ra 2 lần một năm vào tháng 6 và tháng 12.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9199,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.98,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 14,
+      "distribution": "factual",
+      "question": "Nhân viên nghỉ ốm cần nộp giấy tờ gì và trong bao nhiêu ngày làm việc?",
+      "answer": "Nhân viên nghỉ ốm cần nộp giấy xác nhận y tế (giấy khám bệnh hoặc giấy ra viện) trong vòng 3 ngày làm việc kể từ ngày quay lại làm việc.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.7953,
+      "context_precision": 1.0,
+      "context_recall": 0.5,
+      "avg_score": 0.8238,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 15,
+      "distribution": "factual",
+      "question": "Tạm ứng dưới 5 triệu cần ai phê duyệt? Từ 5 triệu trở lên thì sao?",
+      "answer": "Tạm ứng dưới 5.000.000 VNĐ cần phê duyệt của trưởng phòng. Từ 5.000.000 VNĐ trở lên cần thêm phê duyệt của Kế toán trưởng.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.682,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9205,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 16,
+      "distribution": "factual",
+      "question": "Tài khoản VPN bị khóa tự động sau bao nhiêu ngày không hoạt động?",
+      "answer": "Tài khoản VPN tự động bị khóa sau 60 ngày không hoạt động.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.843,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9607,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 17,
+      "distribution": "factual",
+      "question": "Phụ cấp điện thoại dành cho những cấp bậc nào và mức bao nhiêu?",
+      "answer": "Phụ cấp điện thoại dành cho nhân viên cấp Manager trở lên là 500.000 VNĐ/tháng và nhân viên cấp Lead là 300.000 VNĐ/tháng. Các cấp bậc khác không có phụ cấp điện thoại.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.7994,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9498,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 18,
+      "distribution": "factual",
+      "question": "Cơ cấu điểm đánh giá hiệu suất gồm những thành phần nào và tỷ lệ ra sao?",
+      "answer": "Cơ cấu điểm đánh giá hiệu suất gồm hai thành phần:\n- **KPI cá nhân**: chiếm **70%** tổng điểm.\n- **Peer review**: chiếm **30%** tổng điểm.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.7734,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9433,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 19,
+      "distribution": "factual",
+      "question": "Thời gian thử việc tiêu chuẩn và tối đa (dành cho Manager trở lên) là bao nhiêu ngày?",
+      "answer": "Thời gian thử việc tiêu chuẩn là **60 ngày** và thời gian thử việc tối đa dành cho vị trí quản lý cấp cao (Manager trở lên) là **90 ngày**.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.7652,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9413,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 20,
+      "distribution": "factual",
+      "question": "Phụ cấp đi lại tối đa mỗi tháng là bao nhiêu và điều kiện để được hưởng là gì?",
+      "answer": "Phụ cấp đi lại tối đa mỗi tháng là **2.000.000 VNĐ**. Điều kiện để được hưởng là nhân viên có tần suất công tác ngoài văn phòng trên 8 ngày/tháng và phải có chứng từ hợp lệ (vé xe, hóa đơn xăng, Grab receipt).",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.7535,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9384,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 21,
+      "distribution": "multi_hop",
+      "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
+      "answer": "Nhân viên Senior có 9 năm thâm niên được 18 ngày phép (15 + 3) và hưởng lương.",
+      "faithfulness": 0.6667,
+      "answer_relevancy": 0.8921,
+      "context_precision": 0.8333,
+      "context_recall": 0.5,
+      "avg_score": 0.723,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 22,
+      "distribution": "multi_hop",
+      "question": "Nếu cần mua một chiếc laptop 30 triệu cho nhân viên mới, ai phê duyệt và cần gì từ phòng CNTT?",
+      "answer": "Đối với việc mua một chiếc laptop 30 triệu VNĐ, Giám đốc phòng ban sẽ là người phê duyệt. Trước khi đề xuất, cần có xác nhận của phòng CNTT về cấu hình kỹ thuật của laptop.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 0.8468,
+      "context_precision": 1.0,
+      "context_recall": 0.6667,
+      "avg_score": 0.7534,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 23,
+      "distribution": "multi_hop",
+      "question": "Nhân viên được tài trợ khóa học 25 triệu, nghỉ việc sau 8 tháng hoàn thành khóa học. Phải hoàn trả bao nhiêu?",
+      "answer": "100% chi phí đào tạo đã được tài trợ, tức là 25 triệu VNĐ.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 0.6012,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.7753,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 24,
+      "distribution": "multi_hop",
+      "question": "Nhân viên tạm ứng 15 triệu, sau 20 ngày mới thanh toán. Bị phạt bao nhiêu?",
+      "answer": "Nhân viên sẽ bị phạt 2% trên số tiền chưa hoàn ứng, tức là 2% của 15 triệu VNĐ. \n\nTính toán: \n2% của 15.000.000 VNĐ = 0.02 * 15.000.000 = 300.000 VNĐ.\n\nVì vậy, nhân viên sẽ bị phạt 300.000 VNĐ.",
+      "faithfulness": 0.2,
+      "answer_relevancy": 0.6999,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.725,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 25,
+      "distribution": "multi_hop",
+      "question": "Lương thử việc của nhân viên Junior mức cao nhất là bao nhiêu?",
+      "answer": "Lương thử việc của nhân viên Junior mức cao nhất là 17.000.000 VNĐ.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.9099,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.7275,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 26,
+      "distribution": "multi_hop",
+      "question": "Nhân viên vừa kết hôn và cùng tuần đó có con kết hôn. Tổng số ngày nghỉ đặc biệt có lương là bao nhiêu?",
+      "answer": "Tổng số ngày nghỉ đặc biệt có lương là 4 ngày (3 ngày cho kết hôn của nhân viên và 1 ngày cho kết hôn của con).",
+      "faithfulness": 0.6667,
+      "answer_relevancy": 0.8496,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.8791,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 27,
+      "distribution": "multi_hop",
+      "question": "Nhân viên có thâm niên 7 năm theo v2024 được nghỉ bao nhiêu ngày phép? Nếu bị trừ thêm 4 ngày ốm không có giấy y tế thì còn lại bao nhiêu?",
+      "answer": "Nhân viên có thâm niên 7 năm theo v2024 được nghỉ tổng cộng 16 ngày phép (15 ngày cơ bản + 1 ngày cho thâm niên 3 năm). Nếu bị trừ thêm 4 ngày ốm không có giấy y tế, còn lại 12 ngày phép.",
+      "faithfulness": 0.6667,
+      "answer_relevancy": 0.9007,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.8919,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 28,
+      "distribution": "multi_hop",
+      "question": "Nhân viên cấp Lead nhận tổng phụ cấp hàng tháng (ăn trưa + điện thoại) là bao nhiêu?",
+      "answer": "Nhân viên cấp Lead nhận tổng phụ cấp hàng tháng là:\n\n- Phụ cấp ăn trưa: 1.000.000 VNĐ\n- Phụ cấp điện thoại: 300.000 VNĐ\n\nTổng phụ cấp = 1.000.000 VNĐ + 300.000 VNĐ = 1.300.000 VNĐ.\n\nVậy, nhân viên cấp Lead nhận tổng phụ cấp hàng tháng là **1.300.000 VNĐ**.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.8867,
+      "context_precision": 0.5833,
+      "context_recall": 1.0,
+      "avg_score": 0.8675,
+      "worst_metric": "context_precision"
+    },
+    {
+      "question_id": 29,
+      "distribution": "multi_hop",
+      "question": "Nhân viên tạm ứng 8 triệu, chưa thanh toán sau 30 ngày (quá hạn 15 ngày). Ai phê duyệt khoản này và phí phạt là bao nhiêu?",
+      "answer": "Không tìm thấy.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.5,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 30,
+      "distribution": "multi_hop",
+      "question": "So sánh quyền lợi bảo hiểm giữa nhân viên thử việc và nhân viên chính thức.",
+      "answer": "Nhân viên thử việc được tham gia bảo hiểm xã hội bắt buộc nhưng chưa được hưởng gói bảo hiểm sức khỏe PVI. Ngược lại, nhân viên chính thức nhận được gói bảo hiểm sức khỏe toàn diện qua PVI Insurance.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.6968,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9242,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 31,
+      "distribution": "multi_hop",
+      "question": "Nhân viên đi công tác trong nước 2 ngày, ở khách sạn giá 1.500.000 VNĐ/đêm. Công ty thanh toán tối đa bao nhiêu cho tiền khách sạn?",
+      "answer": "Công ty thanh toán tối đa cho tiền khách sạn là 2.400.000 VNĐ (1.200.000 VNĐ/đêm x 2 đêm).",
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.7933,
+      "context_precision": 1.0,
+      "context_recall": 0.6667,
+      "avg_score": 0.615,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 32,
+      "distribution": "multi_hop",
+      "question": "Nhân viên mới đang trong tháng thứ 3 thử việc có BẮT BUỘC tham dự buổi đào tạo nội bộ của phòng ban không? Tại sao?",
+      "answer": "Có, nhân viên mới đang trong tháng thứ 3 thử việc có BẮT BUỘC tham dự buổi đào tạo nội bộ của phòng ban. Vì theo chính sách đào tạo, nhân viên mới (trong 6 tháng đầu) phải tham gia tất cả các buổi đào tạo của phòng ban.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.8603,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.7151,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 33,
+      "distribution": "multi_hop",
+      "question": "Nhân viên Manager có thâm niên 12 năm: tổng phụ cấp hàng tháng và số ngày phép năm theo v2024 là bao nhiêu?",
+      "answer": "Không tìm thấy.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 1.0,
+      "context_recall": 0.5,
+      "avg_score": 0.375,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 34,
+      "distribution": "multi_hop",
+      "question": "Nhân viên tạm ứng 4 triệu và một nhân viên khác tạm ứng 7 triệu: quy trình phê duyệt khác nhau thế nào?",
+      "answer": "Nhân viên tạm ứng 4 triệu sẽ được trưởng phòng phê duyệt, trong khi nhân viên tạm ứng 7 triệu sẽ không thể được phê duyệt mà cần phải tuân theo quy trình khác (cần phê duyệt từ Giám đốc).",
+      "faithfulness": 0.25,
+      "answer_relevancy": 0.7625,
+      "context_precision": 1.0,
+      "context_recall": 0.6667,
+      "avg_score": 0.6698,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 35,
+      "distribution": "multi_hop",
+      "question": "Nhân viên Junior P1 có lương cơ bản 12 triệu vừa vào thử việc: nhận lương bao nhiêu và phụ cấp gì tháng đầu tiên?",
+      "answer": "Nhân viên Junior P1 có lương cơ bản 12 triệu trong thời gian thử việc sẽ nhận lương 85% của mức lương này, tức là 10.200.000 VNĐ. Phụ cấp ăn trưa sẽ được áp dụng đầy đủ từ ngày đầu tiên.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 0.8172,
+      "context_precision": 1.0,
+      "context_recall": 0.75,
+      "avg_score": 0.7668,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 36,
+      "distribution": "multi_hop",
+      "question": "Kết quả đánh giá hiệu suất tháng 6 và tháng 12 được dùng để làm gì khác nhau?",
+      "answer": "Kết quả đánh giá giữa năm (tháng 6) dùng để điều chỉnh mục tiêu, còn kết quả cuối năm (tháng 12) dùng để xét tăng lương và thưởng.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.6514,
+      "context_precision": 1.0,
+      "context_recall": 0.6667,
+      "avg_score": 0.8295,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 37,
+      "distribution": "multi_hop",
+      "question": "Nhân viên tự ý xóa malware khỏi máy và chia sẻ thông tin sự cố này trên Slack nội bộ. Vi phạm những chính sách nào cụ thể?",
+      "answer": "Nhân viên tự ý xóa malware mà không có sự hướng dẫn của đội CNTT vi phạm quy chế bảo mật và có thể bị kỷ luật theo mức cảnh cáo hoặc sa thải. Cũng như việc chia sẻ thông tin sự cố trên Slack có thể vi phạm chính sách phân loại dữ liệu, dẫn đến việc bị xử lý kỷ luật theo Quy chế kỷ luật công ty, mức cao nhất là sa thải và chịu trách nhiệm pháp lý.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.7065,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9266,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 38,
+      "distribution": "multi_hop",
+      "question": "Nhân viên đi công tác nước ngoài 4 ngày tại thành phố lớn, ở khách sạn 200 USD/đêm (3 đêm). Công ty thanh toán bao nhiêu tiền khách sạn?",
+      "answer": "Công ty thanh toán tối đa 150 USD/đêm cho khách sạn. Nhân viên ở 3 đêm, vì vậy tổng số tiền khách sạn công ty thanh toán là 150 USD x 3 đêm = 450 USD.",
+      "faithfulness": 0.25,
+      "answer_relevancy": 0.8038,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.7635,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 39,
+      "distribution": "multi_hop",
+      "question": "So sánh yêu cầu mật khẩu giữa policy v1.0 và v2.0 về độ dài tối thiểu, thời hạn đổi và MFA.",
+      "answer": "Không tìm thấy.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.5,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 40,
+      "distribution": "multi_hop",
+      "question": "Nhân viên thử việc tháng thứ 3 phát hiện vi phạm bảo mật. Họ nên và không nên làm gì theo chính sách?",
+      "answer": "Nhân viên thử việc tháng thứ 3 phát hiện vi phạm bảo mật **phải báo cáo trong vòng 1 giờ** qua email **helpdesk@cty.vn**. Họ **không nên tự ý xử lý** sự cố đó, vì điều này sẽ bị xem là vi phạm nghiêm trọng quy chế bảo mật và có thể dẫn đến kỷ luật.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.7163,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "avg_score": 0.9291,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 41,
+      "distribution": "adversarial",
+      "question": "Nhân viên được nghỉ bao nhiêu ngày phép năm?",
+      "answer": "Mỗi nhân viên chính thức được hưởng 15 ngày phép năm có lương.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9232,
+      "context_precision": 1.0,
+      "context_recall": 0.6667,
+      "avg_score": 0.8975,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 42,
+      "distribution": "adversarial",
+      "question": "Thâm niên bao nhiêu năm thì được cộng thêm ngày phép?",
+      "answer": "Nhân viên có thâm niên từ 3 năm trở lên được cộng thêm 1 ngày phép cho mỗi 3 năm làm việc liên tục.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.825,
+      "context_precision": 1.0,
+      "context_recall": 0.6667,
+      "avg_score": 0.8729,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 43,
+      "distribution": "adversarial",
+      "question": "Mật khẩu phải có tối thiểu bao nhiêu ký tự?",
+      "answer": "Mật khẩu phải có tối thiểu 12 ký tự.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.853,
+      "context_precision": 1.0,
+      "context_recall": 0.6667,
+      "avg_score": 0.8799,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 44,
+      "distribution": "adversarial",
+      "question": "Bao lâu phải đổi mật khẩu một lần?",
+      "answer": "Mật khẩu phải được thay đổi mỗi 120 ngày.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.912,
+      "context_precision": 0.8333,
+      "context_recall": 0.6667,
+      "avg_score": 0.853,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 45,
+      "distribution": "adversarial",
+      "question": "Có cần kích hoạt xác thực đa yếu tố (MFA) không?",
+      "answer": "Có, tất cả nhân viên bắt buộc phải kích hoạt MFA cho tài khoản email, VPN và các hệ thống nội bộ.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.7339,
+      "context_precision": 1.0,
+      "context_recall": 0.5,
+      "avg_score": 0.8085,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 46,
+      "distribution": "adversarial",
+      "question": "Nhân viên thử việc có được nghỉ phép năm không?",
+      "answer": "Nhân viên thử việc không được nghỉ phép năm, nhưng có thể xin nghỉ không lương với sự phê duyệt của trưởng phòng.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_precision": 0.8333,
+      "context_recall": 0.6667,
+      "avg_score": 0.75,
+      "worst_metric": "faithfulness"
+    },
+    {
+      "question_id": 47,
+      "distribution": "adversarial",
+      "question": "Khi phát hiện malware trên máy tính công ty, nhân viên có nên tự xử lý không?",
+      "answer": "Nhân viên **không nên tự xử lý malware** hoặc tìm cách khắc phục mà không có sự hướng dẫn của đội CNTT.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 1.0,
+      "context_recall": 0.6667,
+      "avg_score": 0.6667,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 48,
+      "distribution": "adversarial",
+      "question": "Nhân viên thử việc có được hưởng bảo hiểm sức khỏe PVI không?",
+      "answer": "Không tìm thấy.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 1.0,
+      "context_recall": 0.6667,
+      "avg_score": 0.6667,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "question_id": 49,
+      "distribution": "adversarial",
+      "question": "Theo chính sách nghỉ phép cũ (v2023), nhân viên được nghỉ bao nhiêu ngày? Còn chính sách nào đang có hiệu lực hiện tại?",
+      "answer": "Theo chính sách nghỉ phép cũ (v2023), nhân viên được nghỉ **12 ngày**. Chính sách nghỉ phép năm 2024 đang có hiệu lực hiện tại, bắt đầu từ ngày **01/01/2024**.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.8305,
+      "context_precision": 1.0,
+      "context_recall": 0.6667,
+      "avg_score": 0.8743,
+      "worst_metric": "context_recall"
+    },
+    {
+      "question_id": 50,
+      "distribution": "adversarial",
+      "question": "Nhân viên Manager có thể dùng VPN cá nhân (như NordVPN) khi WFH để tăng bảo mật thêm không?",
+      "answer": "Không tìm thấy.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 1.0,
+      "context_recall": 0.6667,
+      "avg_score": 0.4167,
+      "worst_metric": "faithfulness"
+    }
+  ]
+}

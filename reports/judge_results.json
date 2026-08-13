@@ -1,0 +1,413 @@
+{
+  "judge_model": "gpt-4o-mini",
+  "total_pairs": 10,
+  "cohen_kappa": {
+    "value": 1.0,
+    "interpretation": "almost perfect",
+    "substantial": true,
+    "n": 10,
+    "judge_labels": [
+      1,
+      0,
+      1,
+      1,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    "human_labels": [
+      1,
+      0,
+      1,
+      1,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    "agreement_rate": 1.0
+  },
+  "cohen_kappa_context_only": {
+    "value": 0.4,
+    "interpretation": "fair",
+    "judge_labels": [
+      1,
+      0,
+      1,
+      1,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0
+    ],
+    "note": "Judge chỉ thấy retrieved context, không thấy reference answer — cho thấy grounding ảnh hưởng thế nào tới agreement với human."
+  },
+  "bias_report": {
+    "total_judged": 10,
+    "position_bias_rate": 0.2,
+    "position_bias_count": 2,
+    "verbosity_bias": 1.0,
+    "verbosity_details": {
+      "a_wins_a_longer": 0,
+      "b_wins_b_longer": 8,
+      "total_decisive": 8
+    },
+    "interpretation": "Position bias thấp — judge ổn định."
+  },
+  "verbosity_probe": {
+    "n_cases": 3,
+    "picked_long_wrong": 3,
+    "verbosity_bias_rate": 1.0,
+    "note": "Câu dài luôn là câu SAI → tỷ lệ > 0 nghĩa là judge thực sự thiên vị độ dài.",
+    "cases": [
+      {
+        "question": "Nhân viên chính thức được nghỉ bao nhiêu ngày phép năm?",
+        "short_correct": "15 ngày phép năm (chính sách v2024).",
+        "long_wrong": "Theo quy định hiện hành của công ty về chế độ nghỉ phép, được xây dựng trên cơ sở Bộ luật Lao động và các văn bản nội bộ liên quan, mỗi nhân viên chính thức sẽ được hưởng tổng cộng 12 ngày phép năm có hưởng lương, số ngày này được cộng dồn theo tháng làm việc và có thể chuyển sang quý I năm sau nếu chưa sử dụng hết, đồng thời được ghi nhận đầy đủ trên hệ thống HRM.",
+        "len_ratio": 10.2,
+        "final_winner": "B",
+        "picked_long_wrong": true,
+        "position_consistent": true
+      },
+      {
+        "question": "Mua thiết bị 55 triệu đồng cần ai phê duyệt?",
+        "short_correct": "CEO phê duyệt, vì vượt ngưỡng 50 triệu.",
+        "long_wrong": "Quy trình mua sắm nội bộ được thiết kế theo nhiều cấp phê duyệt nhằm đảm bảo tính minh bạch và kiểm soát chi phí. Với một khoản chi có giá trị 55 triệu đồng, hồ sơ sẽ được lập bởi bộ phận đề xuất, chuyển qua bộ phận mua sắm rà soát báo giá, và sau đó Giám đốc phòng ban là cấp có thẩm quyền phê duyệt cuối cùng trước khi phát hành đơn đặt hàng cho nhà cung cấp.",
+        "len_ratio": 9.3,
+        "final_winner": "B",
+        "picked_long_wrong": true,
+        "position_consistent": true
+      },
+      {
+        "question": "Nhân viên thử việc có được nghỉ phép năm không?",
+        "short_correct": "Không. Thử việc chưa được nghỉ phép năm, nếu cần thì xin nghỉ không lương.",
+        "long_wrong": "Chính sách nhân sự của công ty luôn hướng tới việc đảm bảo quyền lợi cho mọi nhân viên ngay từ ngày đầu tiên gia nhập. Vì vậy, nhân viên trong giai đoạn thử việc vẫn được hưởng đầy đủ chế độ nghỉ phép năm theo tỷ lệ tương ứng với thời gian làm việc thực tế, và có thể đăng ký nghỉ trên hệ thống HRM giống như nhân viên chính thức, chỉ cần có sự đồng ý của quản lý trực tiếp.",
+        "len_ratio": 5.1,
+        "final_winner": "B",
+        "picked_long_wrong": true,
+        "position_consistent": true
+      }
+    ]
+  },
+  "per_question": [
+    {
+      "question_id": 1,
+      "question": "Nhân viên được nghỉ bao nhiêu ngày khi kết hôn?",
+      "model_answer": "Nhân viên được nghỉ 3 ngày làm việc có lương khi kết hôn.",
+      "judge_label": 1,
+      "judge_label_ctx_only": 1,
+      "human_label": 1,
+      "agree": true,
+      "human_note": "Chính xác và đầy đủ.",
+      "pairwise_winner": "B",
+      "position_consistent": true
+    },
+    {
+      "question_id": 5,
+      "question": "Muốn mua thiết bị trị giá 55 triệu cần ai phê duyệt?",
+      "model_answer": "Cần Giám đốc phòng ban phê duyệt.",
+      "judge_label": 0,
+      "judge_label_ctx_only": 0,
+      "human_label": 0,
+      "agree": true,
+      "human_note": "Sai — 55 triệu vượt ngưỡng 50 triệu nên phải CEO phê duyệt, không phải Director.",
+      "pairwise_winner": "B",
+      "position_consistent": true
+    },
+    {
+      "question_id": 12,
+      "question": "Thưởng Tết tối thiểu cho nhân viên chính thức có từ 6 tháng trở lên là bao nhiêu?",
+      "model_answer": "Nhân viên được thưởng Tết tối thiểu 1 tháng lương.",
+      "judge_label": 1,
+      "judge_label_ctx_only": 1,
+      "human_label": 1,
+      "agree": true,
+      "human_note": "Đúng và súc tích.",
+      "pairwise_winner": "B",
+      "position_consistent": true
+    },
+    {
+      "question_id": 21,
+      "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
+      "model_answer": "Được nghỉ 18 ngày phép (15 cơ bản + 3 thâm niên). Lương Senior từ 20 đến 35 triệu.",
+      "judge_label": 1,
+      "judge_label_ctx_only": 1,
+      "human_label": 1,
+      "agree": true,
+      "human_note": "Tính đúng, bao gồm cả phép và lương.",
+      "pairwise_winner": "tie",
+      "position_consistent": false
+    },
+    {
+      "question_id": 23,
+      "question": "Nhân viên được tài trợ khóa học 25 triệu, nghỉ việc sau 8 tháng. Phải hoàn trả bao nhiêu?",
+      "model_answer": "Hoàn trả 25 triệu vì chưa đủ 1 năm cam kết.",
+      "judge_label": 1,
+      "judge_label_ctx_only": 0,
+      "human_label": 1,
+      "agree": true,
+      "human_note": "Đúng — 100% hoàn trả vì nghỉ trước 12 tháng.",
+      "pairwise_winner": "B",
+      "position_consistent": true
+    },
+    {
+      "question_id": 29,
+      "question": "Nhân viên tạm ứng 8 triệu, chưa thanh toán sau 30 ngày. Ai phê duyệt và phí phạt là bao nhiêu?",
+      "model_answer": "Trưởng phòng phê duyệt. Phạt 2% tháng trên 8 triệu.",
+      "judge_label": 0,
+      "judge_label_ctx_only": 1,
+      "human_label": 0,
+      "agree": true,
+      "human_note": "Thiếu — 8 triệu cần cả Kế toán trưởng. Phạt phải tính pro-rata cho 15 ngày quá hạn = 80.000 VNĐ.",
+      "pairwise_winner": "B",
+      "position_consistent": true
+    },
+    {
+      "question_id": 33,
+      "question": "Nhân viên Manager có thâm niên 12 năm: tổng phụ cấp hàng tháng và số ngày phép năm?",
+      "model_answer": "Phép: 19 ngày. Phụ cấp: 1.500.000 VNĐ/tháng.",
+      "judge_label": 1,
+      "judge_label_ctx_only": 0,
+      "human_label": 1,
+      "agree": true,
+      "human_note": "Tính đúng cả hai.",
+      "pairwise_winner": "B",
+      "position_consistent": true
+    },
+    {
+      "question_id": 41,
+      "question": "Nhân viên được nghỉ bao nhiêu ngày phép năm?",
+      "model_answer": "Nhân viên được nghỉ 12 ngày phép năm.",
+      "judge_label": 0,
+      "judge_label_ctx_only": 0,
+      "human_label": 0,
+      "agree": true,
+      "human_note": "Sai — trả lời theo v2023 đã hết hiệu lực. v2024 hiện hành là 15 ngày.",
+      "pairwise_winner": "B",
+      "position_consistent": true
+    },
+    {
+      "question_id": 46,
+      "question": "Nhân viên thử việc có được nghỉ phép năm không?",
+      "model_answer": "Nhân viên thử việc không được nghỉ phép năm và phải xin nghỉ không lương nếu cần.",
+      "judge_label": 1,
+      "judge_label_ctx_only": 1,
+      "human_label": 1,
+      "agree": true,
+      "human_note": "Đúng hoàn toàn, bao gồm hành động thay thế.",
+      "pairwise_winner": "tie",
+      "position_consistent": false
+    },
+    {
+      "question_id": 50,
+      "question": "Nhân viên Manager có thể dùng VPN cá nhân (NordVPN) khi WFH không?",
+      "model_answer": "Được, miễn là đảm bảo kết nối an toàn.",
+      "judge_label": 0,
+      "judge_label_ctx_only": 0,
+      "human_label": 0,
+      "agree": true,
+      "human_note": "Sai — VPN cá nhân bị cấm theo chính sách VPN v1.3. Phải dùng VPN WireGuard của công ty.",
+      "pairwise_winner": "B",
+      "position_consistent": true
+    }
+  ],
+  "pairwise_results": [
+    {
+      "question": "Nhân viên được nghỉ bao nhiêu ngày khi kết hôn?",
+      "answer_a": "Nhân viên được nghỉ 3 ngày làm việc có lương khi kết hôn.",
+      "answer_b": "Nhân viên được nghỉ 3 ngày làm việc có lương khi kết hôn, không trừ vào phép năm.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "position_consistent": true,
+      "reasoning_pass1": "Answer B cung cấp thông tin đầy đủ hơn bằng cách nêu rõ rằng 3 ngày nghỉ không trừ vào phép năm, trong khi Answer A không đề cập đến điều này.",
+      "reasoning_pass2": "Answer A cung cấp thông tin đầy đủ về số ngày nghỉ và điều kiện không trừ vào phép năm, trong khi Answer B thiếu thông tin về việc không trừ vào phép năm.",
+      "scores_pass1": {
+        "A": 0.8,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 0.8,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Muốn mua thiết bị trị giá 55 triệu cần ai phê duyệt?",
+      "answer_a": "Cần Giám đốc phòng ban phê duyệt.",
+      "answer_b": "Đơn hàng trên 50.000.000 VNĐ cần Tổng Giám đốc (CEO) phê duyệt.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "position_consistent": true,
+      "reasoning_pass1": "Answer B cung cấp thông tin chính xác về mức phê duyệt cần thiết cho đơn hàng trên 50 triệu, trong khi Answer A chỉ đề cập đến Giám đốc phòng ban mà không rõ ràng về mức giá cụ thể.",
+      "reasoning_pass2": "Answer A cung cấp thông tin chính xác về việc cần Tổng Giám đốc phê duyệt cho đơn hàng trên 50 triệu VNĐ, trong khi Answer B không chính xác.",
+      "scores_pass1": {
+        "A": 0.6,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 0.0,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Thưởng Tết tối thiểu cho nhân viên chính thức có từ 6 tháng trở lên là bao nhiêu?",
+      "answer_a": "Nhân viên được thưởng Tết tối thiểu 1 tháng lương.",
+      "answer_b": "Nhân viên chính thức có thời gian làm việc từ 6 tháng trở lên được thưởng Tết tối thiểu 1 tháng lương. Nhân viên dưới 6 tháng được hưởng pro-rata theo số tháng làm việc thực tế.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "position_consistent": true,
+      "reasoning_pass1": "Answer B cung cấp thông tin đầy đủ hơn về điều kiện thưởng Tết cho nhân viên dưới 6 tháng, trong khi Answer A chỉ nêu thông tin cho nhân viên từ 6 tháng trở lên.",
+      "reasoning_pass2": "Answer A cung cấp thông tin chi tiết về điều kiện thưởng Tết cho nhân viên, bao gồm cả thông tin về nhân viên dưới 6 tháng, trong khi Answer B chỉ nêu thông tin chung mà không có điều kiện cụ thể.",
+      "scores_pass1": {
+        "A": 0.7,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 0.5,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
+      "answer_a": "Được nghỉ 18 ngày phép (15 cơ bản + 3 thâm niên). Lương Senior từ 20 đến 35 triệu.",
+      "answer_b": "Theo chính sách v2024: 15 ngày cơ bản + 3 ngày thâm niên (9÷3=3) = 18 ngày phép. Lương Senior (P3-P4): 20-35 triệu VNĐ/tháng.",
+      "winner_pass1": "B",
+      "winner_pass2": "tie",
+      "final_winner": "tie",
+      "position_consistent": false,
+      "reasoning_pass1": "Answer B cung cấp thông tin chi tiết hơn về chính sách và cách tính số ngày phép, đồng thời xác định rõ ràng mức lương theo cấp bậc.",
+      "reasoning_pass2": "Cả hai câu trả lời đều chính xác và đầy đủ thông tin về số ngày phép và lương, nhưng A có phần giải thích chi tiết hơn.",
+      "scores_pass1": {
+        "A": 0.7,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 1.0,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Nhân viên được tài trợ khóa học 25 triệu, nghỉ việc sau 8 tháng. Phải hoàn trả bao nhiêu?",
+      "answer_a": "Hoàn trả 25 triệu vì chưa đủ 1 năm cam kết.",
+      "answer_b": "Nhân viên phải cam kết làm việc ít nhất 1 năm sau khi hoàn thành khóa học. Nghỉ sau 8 tháng là trước hạn cam kết, phải hoàn trả 100% chi phí tức 25.000.000 VNĐ.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "position_consistent": true,
+      "reasoning_pass1": "Câu trả lời B cung cấp thông tin chi tiết về cam kết và lý do hoàn trả, trong khi A chỉ nêu kết quả mà không giải thích rõ ràng.",
+      "reasoning_pass2": "Answer A cung cấp thông tin chi tiết về cam kết và lý do hoàn trả, trong khi Answer B chỉ nêu kết luận mà không giải thích.",
+      "scores_pass1": {
+        "A": 0.6,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 0.7,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Nhân viên tạm ứng 8 triệu, chưa thanh toán sau 30 ngày. Ai phê duyệt và phí phạt là bao nhiêu?",
+      "answer_a": "Trưởng phòng phê duyệt. Phạt 2% tháng trên 8 triệu.",
+      "answer_b": "Phê duyệt: 8 triệu (≥5 triệu) cần Trưởng phòng + Kế toán trưởng. Phí phạt quá hạn 15 ngày: 2%/tháng × 8.000.000 × (15/30) = 80.000 VNĐ. Không được tạm ứng mới cho đến khi hoàn ứng.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "position_consistent": true,
+      "reasoning_pass1": "Answer B cung cấp thông tin chi tiết về quy trình phê duyệt và cách tính phí phạt, trong khi Answer A thiếu thông tin về quy trình phê duyệt và chỉ đưa ra mức phạt mà không có cách tính cụ thể.",
+      "reasoning_pass2": "Answer A cung cấp thông tin chi tiết về phê duyệt và cách tính phí phạt, trong khi Answer B thiếu thông tin về phí phạt cụ thể và không đầy đủ.",
+      "scores_pass1": {
+        "A": 0.5,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 0.5,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Nhân viên Manager có thâm niên 12 năm: tổng phụ cấp hàng tháng và số ngày phép năm?",
+      "answer_a": "Phép: 19 ngày. Phụ cấp: 1.500.000 VNĐ/tháng.",
+      "answer_b": "Phụ cấp tháng: ăn trưa 1.000.000 + điện thoại Manager 500.000 = 1.500.000 VNĐ. Phép năm v2024: 15 ngày cơ bản + 4 ngày thâm niên (12÷3=4) = 19 ngày phép.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "position_consistent": true,
+      "reasoning_pass1": "Answer B cung cấp thông tin chi tiết hơn về cách tính số ngày phép và phân tích phụ cấp, trong khi Answer A chỉ đưa ra thông tin ngắn gọn mà không giải thích.",
+      "reasoning_pass2": "Answer A cung cấp thông tin chi tiết về cách tính phụ cấp và số ngày phép, trong khi Answer B chỉ đưa ra kết quả mà không giải thích.",
+      "scores_pass1": {
+        "A": 0.6,
+        "B": 0.9
+      },
+      "scores_pass2": {
+        "A": 0.7,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Nhân viên được nghỉ bao nhiêu ngày phép năm?",
+      "answer_a": "Nhân viên được nghỉ 12 ngày phép năm.",
+      "answer_b": "Theo chính sách v2024 HIỆN HÀNH: 15 ngày cơ bản (+1 ngày/3 năm thâm niên). Chính sách v2023 (đã bị thay thế) là 12 ngày. RAG có thể retrieve cả 2 tài liệu — câu trả lời đúng phải ưu tiên v2024.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "position_consistent": true,
+      "reasoning_pass1": "Answer B cung cấp thông tin chính xác và đầy đủ về số ngày phép năm theo chính sách hiện hành, bao gồm cả thông tin về thâm niên, trong khi Answer A chỉ đưa ra con số cũ.",
+      "reasoning_pass2": "Câu trả lời A cung cấp thông tin chính xác và đầy đủ về số ngày phép năm theo chính sách mới nhất, trong khi câu trả lời B chỉ đưa ra thông tin cũ và không chính xác.",
+      "scores_pass1": {
+        "A": 0.4,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 0.0,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Nhân viên thử việc có được nghỉ phép năm không?",
+      "answer_a": "Nhân viên thử việc không được nghỉ phép năm và phải xin nghỉ không lương nếu cần.",
+      "answer_b": "KHÔNG. Nhân viên thử việc không được nghỉ phép năm. Nếu cần nghỉ phải xin nghỉ không lương và được trưởng phòng phê duyệt. Đây là negation trap — câu trả lời đúng là phủ định.",
+      "winner_pass1": "B",
+      "winner_pass2": "A",
+      "final_winner": "tie",
+      "position_consistent": false,
+      "reasoning_pass1": "Answer B cung cấp thông tin chính xác và đầy đủ hơn về quy trình xin nghỉ không lương, đồng thời nhấn mạnh rằng đây là một trường hợp phủ định, điều mà Answer A không làm.",
+      "reasoning_pass2": "Answer B cung cấp thông tin chính xác và đầy đủ về việc nhân viên thử việc không được nghỉ phép năm, đồng thời nêu rõ yêu cầu xin nghỉ không lương. Answer A tuy đúng nhưng có phần gây nhầm lẫn với cụm từ 'negation trap'.",
+      "scores_pass1": {
+        "A": 0.6,
+        "B": 0.9
+      },
+      "scores_pass2": {
+        "A": 1.0,
+        "B": 0.7
+      }
+    },
+    {
+      "question": "Nhân viên Manager có thể dùng VPN cá nhân (NordVPN) khi WFH không?",
+      "answer_a": "Được, miễn là đảm bảo kết nối an toàn.",
+      "answer_b": "KHÔNG. Chính sách VPN v1.3 cấm sử dụng VPN cá nhân (NordVPN, ExpressVPN) trong mạng công ty. Bắt buộc dùng VPN WireGuard của công ty. Đây là policy contradiction trap — câu hỏi nghe hợp lý nhưng vi phạm chính sách.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "position_consistent": true,
+      "reasoning_pass1": "Câu trả lời B cung cấp thông tin chính xác về chính sách công ty và nêu rõ lý do cấm sử dụng VPN cá nhân, trong khi câu trả lời A không đề cập đến chính sách này.",
+      "reasoning_pass2": "Answer A chính xác và đầy đủ theo chính sách công ty, trong khi Answer B không tuân thủ quy định.",
+      "scores_pass1": {
+        "A": 0.4,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 0.2,
+        "B": 1.0
+      }
+    }
+  ]
+}

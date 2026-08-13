@@ -1,9 +1,9 @@
 models:
   - type: main
     engine: openai
-    model: google/gemma-4-31b-it
+    model: gpt-4o-mini
     parameters:
-      openai_api_base: https://integrate.api.nvidia.com/v1
+      temperature: 0.0
 
 instructions:
   - type: general
@@ -16,11 +16,12 @@ instructions:
 rails:
   input:
     flows:
-      - check jailbreak
-      - check off topic
-      - check pii request
+      # LLM-based self check — bắt được jailbreak/off-topic/PII-request diễn đạt tự do,
+      # thứ mà intent matching theo keyword trong rails.co bỏ lọt.
+      - self check input
   output:
     flows:
-      - check sensitive output
+      - self check output
 
-# Colang dialogue flows are defined in rails.co
+# Prompt cho self check input/output: guardrails/prompts.yml
+# Colang dialogue flows (canonical forms + refusal messages): guardrails/rails.co

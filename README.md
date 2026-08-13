@@ -227,3 +227,52 @@ Chi tiết xem thêm: [`RUBRIC.md`](RUBRIC.md)
 ---
 
 Chúc các bạn code vui! 🚀 Nếu gặp vấn đề, hãy raise tay — mentors luôn sẵn sàng hỗ trợ.
+
+---
+
+# Bài nộp — 2A202600863 Lê Hữu Khoa
+
+**Cấu hình chạy:** RAG Day 18 (BM25 + `BAAI/bge-m3` + FlashRank) · LLM & judge `gpt-4o-mini`
+(`temperature=0`) · NeMo Guardrails 0.17 · Presidio + custom VN recognizers.
+`.env` cần `OPENAI_API_KEY`, `OPENAI_BASE_URL`, `LLM_MODEL=gpt-4o-mini`.
+
+## Kết quả
+
+| Phase | Kết quả chính | Bonus |
+|---|---|---|
+| A — RAGAS 50q | avg_score **0.798** · factual 0.868 / multi_hop 0.743 / adversarial 0.769 · cụm lỗi nặng nhất `faithfulness × multi_hop` (12 câu) | adversarial < factual ✅ |
+| B — LLM Judge | κ = **1.000** (context + reference), 0.400 khi chỉ có context · position bias 20% · verbosity probe 3/3 | κ > 0.6 ✅ |
+| C — Guardrails | **20/20** adversarial · 0/5 false positive trên benign suite · output rail 3/3 · P95 412.91ms với semantic timeout 400ms | ≥ 18/20 ✅ |
+
+Chi tiết: [`reports/blueprint.md`](reports/blueprint.md) ·
+[`analysis/failure_clusters.md`](analysis/failure_clusters.md) ·
+[`analysis/bias_report.md`](analysis/bias_report.md)
+
+## Những chỗ đi xa hơn đề bài
+
+- **Phase A** — `run_ragas_50q()` gọi lại `evaluate_ragas()` của Day 18 thay vì gọi thẳng
+  `ragas.evaluate()`. Đổi embedding của `answer_relevancy` sang `bge-m3` đa ngữ: với
+  `all-MiniLM-L6-v2` (chỉ tiếng Anh) metric này cho ~0.20 kể cả trên câu trả lời đúng.
+  `cluster_analysis()` trả về thêm `failure_matrix` (chỉ đếm câu dưới ngưỡng 0.6) và chọn
+  dominant distribution theo *tỷ lệ* failure — đếm thô chỉ phản ánh distribution nào nhiều câu hơn.
+- **Phase B** — judge chạy ở `temperature=0` để κ tái lập được; đo κ ở hai mức grounding để cho
+  thấy reference answer quan trọng thế nào (0.400 → 1.000); thêm `verbosity_probe()` với các cặp
+  *câu ngắn đúng vs câu dài sai* để tách verbosity bias khỏi chất lượng.
+- **Phase C** — thay input/output rail bằng NeMo `self check input/output` + `guardrails/prompts.yml`
+  (flow intent-matching gốc trong `rails.co` không hoạt động ở chế độ input rail và làm câu trả lời
+  an toàn bị flag nhầm); giữ keyword layer chạy trước để 16/20 attack bị chặn với 0 API call;
+  thêm `run_benign_suite()` đo false positive (adversarial set chỉ có input xấu nên guard
+  "chặn tất cả" cũng đạt 20/20); thêm timeout cho lớp semantic để giữ P95 trong budget;
+  guard stack degrade an toàn về keyword layer khi không có API key.
+
+## Lệnh chạy lại
+
+```bash
+docker compose up -d
+python setup_answers.py        # → answers_50q.json (50 câu, ~2 phút)
+python src/phase_a_ragas.py    # → reports/ragas_50q.json
+python src/phase_b_judge.py    # → reports/judge_results.json
+python src/phase_c_guard.py    # → reports/guard_results.json
+pytest tests/ -q               # 40 passed
+python check_lab.py            # 22/22 checks passed
+```
